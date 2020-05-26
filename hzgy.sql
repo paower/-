@@ -1,110 +1,19 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost_3306
+Source Server         : paower
 Source Server Version : 50553
 Source Host           : localhost:3306
-Source Database       : renmai3
+Source Database       : renmai
 
 Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2020-05-09 16:24:04
+Date: 2020-05-26 11:22:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
--- ----------------------------
--- Table structure for `nc_admin`
--- ----------------------------
-DROP TABLE IF EXISTS `nc_admin`;
-CREATE TABLE `nc_admin` (
-  `a_id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `a_uname` varchar(20) NOT NULL COMMENT '用户名',
-  `a_true_name` varchar(20) NOT NULL COMMENT '真名',
-  `a_telephone` varchar(40) NOT NULL,
-  `a_email` varchar(64) NOT NULL,
-  `a_passwd` varchar(255) NOT NULL,
-  `a_login_count` mediumint(8) NOT NULL COMMENT '登录次数',
-  `a_last_login_ip` varchar(40) NOT NULL COMMENT '最后登录ip',
-  `a_last_ip_region` varchar(40) NOT NULL,
-  `a_create_time` int(11) NOT NULL COMMENT '创建时间',
-  `a_last_login_time` int(11) NOT NULL COMMENT '最后登录',
-  `a_status` tinyint(4) NOT NULL COMMENT '状态',
-  PRIMARY KEY (`a_id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='后台管理员';
-
--- ----------------------------
--- Records of nc_admin
--- ----------------------------
-INSERT INTO `nc_admin` VALUES ('1', 'admin', '', '', 'admin@admin.com', 'MDAwMDAwMDAwMH+Ket20dYll', '1084', '121.32.177.142', '', '1470304751', '1543332334', '1');
-
--- ----------------------------
--- Table structure for `nc_menu`
--- ----------------------------
-DROP TABLE IF EXISTS `nc_menu`;
-CREATE TABLE `nc_menu` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
-  `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID',
-  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
-  `url` char(255) DEFAULT NULL COMMENT '链接地址',
-  `icon` varchar(20) DEFAULT NULL,
-  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序（同级有效）',
-  PRIMARY KEY (`id`) USING BTREE,
-  KEY `pid` (`pid`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=142 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='后台菜单';
-
--- ----------------------------
--- Records of nc_menu
--- ----------------------------
-INSERT INTO `nc_menu` VALUES ('1', '0', '系统信息', '', 'icon-book', '7');
-INSERT INTO `nc_menu` VALUES ('29', '28', '商品管理', 'Goods/index', '', '2');
-INSERT INTO `nc_menu` VALUES ('36', '35', '订单管理', 'Order/index', '', '1');
-INSERT INTO `nc_menu` VALUES ('38', '37', '基本信息', 'settings/general', '', '1');
-INSERT INTO `nc_menu` VALUES ('40', '37', '邮件配置', 'settings/smtp_mail', '', '3');
-INSERT INTO `nc_menu` VALUES ('43', '0', '用户', '', 'icon-user-md', '0');
-INSERT INTO `nc_menu` VALUES ('46', '37', '配置管理', 'Config/index', '', '5');
-INSERT INTO `nc_menu` VALUES ('47', '43', '后台用户', 'AdminUser/index', '', '3');
-INSERT INTO `nc_menu` VALUES ('51', '1', '基本信息', 'settings/general', '', '1');
-INSERT INTO `nc_menu` VALUES ('54', '53', '文章分类', 'BlogCategory/index', '', '0');
-INSERT INTO `nc_menu` VALUES ('55', '53', '文章列表', 'Blog/index', '', '3');
-INSERT INTO `nc_menu` VALUES ('56', '28', '商品分类', 'GoodsCategory/index', '', '1');
-INSERT INTO `nc_menu` VALUES ('66', '65', '充值管理', 'member/chongzhi', null, '2');
-INSERT INTO `nc_menu` VALUES ('68', '65', '资金充值', 'Member/rmb', null, '1');
-INSERT INTO `nc_menu` VALUES ('69', '65', '资金记录', 'Member/zijing', null, '5');
-INSERT INTO `nc_menu` VALUES ('75', '74', '投诉列表', '/Form/bdlist/bd_id/8', null, '0');
-INSERT INTO `nc_menu` VALUES ('83', '82', '投诉列表', 'Form/bdlist/bd_id/8', null, '0');
-INSERT INTO `nc_menu` VALUES ('85', '84', '分润记录', 'Record/fenrun', null, '1');
-INSERT INTO `nc_menu` VALUES ('88', '84', '赠送记录', 'Record/transaction', null, '4');
-INSERT INTO `nc_menu` VALUES ('140', '107', '总后台店铺', 'Goods/dianpu', null, '1');
-INSERT INTO `nc_menu` VALUES ('93', '84', '交易记录', 'Record/sell', null, '3');
-INSERT INTO `nc_menu` VALUES ('94', '84', '团队分红', 'Record/tuandui', null, '0');
-INSERT INTO `nc_menu` VALUES ('97', '96', '商品管理', 'Goods/index', null, '0');
-INSERT INTO `nc_menu` VALUES ('99', '96', '商城订单', 'Goods/shoporder', null, '0');
-INSERT INTO `nc_menu` VALUES ('102', '101', '道具管理', 'Gpgoods/index', '', '0');
-INSERT INTO `nc_menu` VALUES ('106', '0', '订单', '', 'icon-book', '3');
-INSERT INTO `nc_menu` VALUES ('107', '0', '商城', '', 'icon-gift', '2');
-INSERT INTO `nc_menu` VALUES ('108', '106', '订单管理', 'Order/index', null, '0');
-INSERT INTO `nc_menu` VALUES ('109', '107', '商品管理', 'Goods/index', null, '5');
-INSERT INTO `nc_menu` VALUES ('115', '110', '其他配置', 'Gameconfigs/Othersconfig', null, '16');
-INSERT INTO `nc_menu` VALUES ('116', '0', '提现管理', '', 'icon-book', '5');
-INSERT INTO `nc_menu` VALUES ('117', '116', '提现订单', 'Tixian/tixian', null, '0');
-INSERT INTO `nc_menu` VALUES ('118', '116', '转账订单', 'Tixian/Transfers', null, '0');
-INSERT INTO `nc_menu` VALUES ('119', '1', '公告', 'settings/notice', null, '3');
-INSERT INTO `nc_menu` VALUES ('121', '107', '分类管理', 'Goods/cate', null, '3');
-INSERT INTO `nc_menu` VALUES ('123', '122', '普通会员三级', 'Gameconfigs/sanjione', null, '20');
-INSERT INTO `nc_menu` VALUES ('124', '122', '中级会员三级', 'Gameconfigs/sanjitwo', null, '21');
-INSERT INTO `nc_menu` VALUES ('125', '122', '高级会员三级', 'Gameconfigs/sanjithree', null, '22');
-INSERT INTO `nc_menu` VALUES ('126', '122', '三级达成条件', 'Gameconfigs/sanjiconditions', null, '18');
-INSERT INTO `nc_menu` VALUES ('131', '90', '充值余额记录', 'Member/chongzhibiao', 'icon-dashboard', '55');
-INSERT INTO `nc_menu` VALUES ('132', '90', '出售余额记录', 'Member/chushoubiao', 'icon-dashboard', '44');
-INSERT INTO `nc_menu` VALUES ('133', '1', '文章列表', 'settings/wenzhang', 'icon-dashboard', '33');
-INSERT INTO `nc_menu` VALUES ('134', '1', '文章类型', 'settings/wentype', 'icon-dashboard', '32');
-INSERT INTO `nc_menu` VALUES ('135', '0', '商家入驻', null, 'icon-gift', '3');
-INSERT INTO `nc_menu` VALUES ('136', '135', '个人店铺', 'Goods/ggshop', 'icon-dashboard', '0');
-INSERT INTO `nc_menu` VALUES ('137', '135', '认证列表', 'Goods/verify', 'icon-dashboard', '2');
-INSERT INTO `nc_menu` VALUES ('139', '138', '升级列表', 'Goods/level', 'icon-dashboard', '10');
-INSERT INTO `nc_menu` VALUES ('141', '1', '短信设置', 'settings/msgs', 'icon-dashboard', '0');
 
 -- ----------------------------
 -- Table structure for `ncconfig`
@@ -206,6 +115,98 @@ INSERT INTO `ncconfig` VALUES ('142', 'tui_three_rmb', 'site', '0', '8000000', '
 INSERT INTO `ncconfig` VALUES ('144', 'MSG_password', 'site', '0', '83850', '短信接口密码', '0');
 INSERT INTO `ncconfig` VALUES ('145', 'MSG_account', 'site', '0', '3a247c90b02e8dc1c7f08de60542c622', '短信接口', '0');
 INSERT INTO `ncconfig` VALUES ('146', 'MSG', 'site', '0', '&quot;你的验证码是&quot;.$code.&quot;，如非本人操作，请忽略本短信&quot;', '短信模板', '0');
+
+-- ----------------------------
+-- Table structure for `nc_admin`
+-- ----------------------------
+DROP TABLE IF EXISTS `nc_admin`;
+CREATE TABLE `nc_admin` (
+  `a_id` mediumint(8) NOT NULL AUTO_INCREMENT,
+  `a_uname` varchar(20) NOT NULL COMMENT '用户名',
+  `a_true_name` varchar(20) NOT NULL COMMENT '真名',
+  `a_telephone` varchar(40) NOT NULL,
+  `a_email` varchar(64) NOT NULL,
+  `a_passwd` varchar(255) NOT NULL,
+  `a_login_count` mediumint(8) NOT NULL COMMENT '登录次数',
+  `a_last_login_ip` varchar(40) NOT NULL COMMENT '最后登录ip',
+  `a_last_ip_region` varchar(40) NOT NULL,
+  `a_create_time` int(11) NOT NULL COMMENT '创建时间',
+  `a_last_login_time` int(11) NOT NULL COMMENT '最后登录',
+  `a_status` tinyint(4) NOT NULL COMMENT '状态',
+  PRIMARY KEY (`a_id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='后台管理员';
+
+-- ----------------------------
+-- Records of nc_admin
+-- ----------------------------
+INSERT INTO `nc_admin` VALUES ('1', 'admin', '', '', 'admin@admin.com', 'MDAwMDAwMDAwMH+Ket20dYll', '1084', '121.32.177.142', '', '1470304751', '1543332334', '1');
+
+-- ----------------------------
+-- Table structure for `nc_menu`
+-- ----------------------------
+DROP TABLE IF EXISTS `nc_menu`;
+CREATE TABLE `nc_menu` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '文档ID',
+  `pid` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '上级分类ID',
+  `title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
+  `url` char(255) DEFAULT NULL COMMENT '链接地址',
+  `icon` varchar(20) DEFAULT NULL,
+  `sort_order` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '排序（同级有效）',
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `pid` (`pid`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=142 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='后台菜单';
+
+-- ----------------------------
+-- Records of nc_menu
+-- ----------------------------
+INSERT INTO `nc_menu` VALUES ('1', '0', '系统信息', '', 'icon-book', '7');
+INSERT INTO `nc_menu` VALUES ('29', '28', '商品管理', 'Goods/index', '', '2');
+INSERT INTO `nc_menu` VALUES ('36', '35', '订单管理', 'Order/index', '', '1');
+INSERT INTO `nc_menu` VALUES ('38', '37', '基本信息', 'settings/general', '', '1');
+INSERT INTO `nc_menu` VALUES ('40', '37', '邮件配置', 'settings/smtp_mail', '', '3');
+INSERT INTO `nc_menu` VALUES ('43', '0', '用户', '', 'icon-user-md', '0');
+INSERT INTO `nc_menu` VALUES ('46', '37', '配置管理', 'Config/index', '', '5');
+INSERT INTO `nc_menu` VALUES ('47', '43', '后台用户', 'AdminUser/index', '', '3');
+INSERT INTO `nc_menu` VALUES ('51', '1', '基本信息', 'settings/general', '', '1');
+INSERT INTO `nc_menu` VALUES ('54', '53', '文章分类', 'BlogCategory/index', '', '0');
+INSERT INTO `nc_menu` VALUES ('55', '53', '文章列表', 'Blog/index', '', '3');
+INSERT INTO `nc_menu` VALUES ('56', '28', '商品分类', 'GoodsCategory/index', '', '1');
+INSERT INTO `nc_menu` VALUES ('66', '65', '充值管理', 'member/chongzhi', null, '2');
+INSERT INTO `nc_menu` VALUES ('68', '65', '资金充值', 'Member/rmb', null, '1');
+INSERT INTO `nc_menu` VALUES ('69', '65', '资金记录', 'Member/zijing', null, '5');
+INSERT INTO `nc_menu` VALUES ('75', '74', '投诉列表', '/Form/bdlist/bd_id/8', null, '0');
+INSERT INTO `nc_menu` VALUES ('83', '82', '投诉列表', 'Form/bdlist/bd_id/8', null, '0');
+INSERT INTO `nc_menu` VALUES ('85', '84', '分润记录', 'Record/fenrun', null, '1');
+INSERT INTO `nc_menu` VALUES ('88', '84', '赠送记录', 'Record/transaction', null, '4');
+INSERT INTO `nc_menu` VALUES ('140', '107', '总后台店铺', 'Goods/dianpu', null, '1');
+INSERT INTO `nc_menu` VALUES ('93', '84', '交易记录', 'Record/sell', null, '3');
+INSERT INTO `nc_menu` VALUES ('94', '84', '团队分红', 'Record/tuandui', null, '0');
+INSERT INTO `nc_menu` VALUES ('97', '96', '商品管理', 'Goods/index', null, '0');
+INSERT INTO `nc_menu` VALUES ('99', '96', '商城订单', 'Goods/shoporder', null, '0');
+INSERT INTO `nc_menu` VALUES ('102', '101', '道具管理', 'Gpgoods/index', '', '0');
+INSERT INTO `nc_menu` VALUES ('106', '0', '订单', '', 'icon-book', '3');
+INSERT INTO `nc_menu` VALUES ('107', '0', '商城', '', 'icon-gift', '2');
+INSERT INTO `nc_menu` VALUES ('108', '106', '订单管理', 'Order/index', null, '0');
+INSERT INTO `nc_menu` VALUES ('109', '107', '商品管理', 'Goods/index', null, '5');
+INSERT INTO `nc_menu` VALUES ('115', '110', '其他配置', 'Gameconfigs/Othersconfig', null, '16');
+INSERT INTO `nc_menu` VALUES ('116', '0', '提现管理', '', 'icon-book', '5');
+INSERT INTO `nc_menu` VALUES ('117', '116', '提现订单', 'Tixian/tixian', null, '0');
+INSERT INTO `nc_menu` VALUES ('118', '116', '转账订单', 'Tixian/Transfers', null, '0');
+INSERT INTO `nc_menu` VALUES ('119', '1', '公告', 'settings/notice', null, '3');
+INSERT INTO `nc_menu` VALUES ('121', '107', '分类管理', 'Goods/cate', null, '3');
+INSERT INTO `nc_menu` VALUES ('123', '122', '普通会员三级', 'Gameconfigs/sanjione', null, '20');
+INSERT INTO `nc_menu` VALUES ('124', '122', '中级会员三级', 'Gameconfigs/sanjitwo', null, '21');
+INSERT INTO `nc_menu` VALUES ('125', '122', '高级会员三级', 'Gameconfigs/sanjithree', null, '22');
+INSERT INTO `nc_menu` VALUES ('126', '122', '三级达成条件', 'Gameconfigs/sanjiconditions', null, '18');
+INSERT INTO `nc_menu` VALUES ('131', '90', '充值余额记录', 'Member/chongzhibiao', 'icon-dashboard', '55');
+INSERT INTO `nc_menu` VALUES ('132', '90', '出售余额记录', 'Member/chushoubiao', 'icon-dashboard', '44');
+INSERT INTO `nc_menu` VALUES ('133', '1', '文章列表', 'settings/wenzhang', 'icon-dashboard', '33');
+INSERT INTO `nc_menu` VALUES ('134', '1', '文章类型', 'settings/wentype', 'icon-dashboard', '32');
+INSERT INTO `nc_menu` VALUES ('135', '0', '商家入驻', null, 'icon-gift', '3');
+INSERT INTO `nc_menu` VALUES ('136', '135', '个人店铺', 'Goods/ggshop', 'icon-dashboard', '0');
+INSERT INTO `nc_menu` VALUES ('137', '135', '认证列表', 'Goods/verify', 'icon-dashboard', '2');
+INSERT INTO `nc_menu` VALUES ('139', '138', '升级列表', 'Goods/level', 'icon-dashboard', '10');
+INSERT INTO `nc_menu` VALUES ('141', '1', '短信设置', 'settings/msgs', 'icon-dashboard', '0');
 
 -- ----------------------------
 -- Table structure for `ysk_activate_num`
@@ -389,12 +390,14 @@ CREATE TABLE `ysk_banner` (
   `picture` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '图片',
   `create_time` int(11) DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of ysk_banner
 -- ----------------------------
-INSERT INTO `ysk_banner` VALUES ('14', '1', null, '0', '1', '2020-05-09/5eb63586d7f14.jpg', '1588999558');
+INSERT INTO `ysk_banner` VALUES ('8', '4', null, '0', '1', '2019-05-25/5ce8d7e150db1.jpg', '1558763489');
+INSERT INTO `ysk_banner` VALUES ('9', '6', null, '0', '1', '2019-05-25/5ce8ec74025a3.jpg', '1558768755');
+INSERT INTO `ysk_banner` VALUES ('12', '8', null, '0', '1', '2019-09-17/5d7fe6ac35f48.png', '1568663212');
 
 -- ----------------------------
 -- Table structure for `ysk_bofamx`
@@ -534,6 +537,11 @@ CREATE TABLE `ysk_coindets` (
 -- ----------------------------
 -- Records of ysk_coindets
 -- ----------------------------
+INSERT INTO `ysk_coindets` VALUES ('1', '1', 'sc', '1.0000', '1558144965', '2.0000', '1.0000');
+INSERT INTO `ysk_coindets` VALUES ('2', '1', 'renminb', '1.3000', '1558144965', null, '0.0000');
+INSERT INTO `ysk_coindets` VALUES ('3', '1', 'usernums', '1800.0000', '1558144965', null, '1.0000');
+INSERT INTO `ysk_coindets` VALUES ('4', '1', 'usdt', '7.0000', '1558144965', null, null);
+INSERT INTO `ysk_coindets` VALUES ('5', '1', 'usdtsx', '0.0040', '1558144965', null, null);
 
 -- ----------------------------
 -- Table structure for `ysk_coindets_copy`
@@ -580,11 +588,13 @@ CREATE TABLE `ysk_complaint` (
   `status` tinyint(1) DEFAULT '0' COMMENT '0 未查看 1 已查看',
   `create_time` int(10) DEFAULT NULL COMMENT '投诉时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of ysk_complaint
 -- ----------------------------
+INSERT INTO `ysk_complaint` VALUES ('1', '779151', '121212121', null, '0', '1567857638');
+INSERT INTO `ysk_complaint` VALUES ('2', '779151', '121212121', null, '0', '1567857678');
 
 -- ----------------------------
 -- Table structure for `ysk_config`
@@ -625,7 +635,7 @@ INSERT INTO `ysk_config` VALUES ('30', '2-15代Vip增加积分率', 'morevadd_lv
 INSERT INTO `ysk_config` VALUES ('31', '总要扣比例', 'des_lv', '0.4', '2', '5', '', '', '0', '0', '0', '1');
 INSERT INTO `ysk_config` VALUES ('27', '基础拆分倍数', 'base_lv', '2.5', '2', '5', '', '', '0', '0', '0', '1');
 INSERT INTO `ysk_config` VALUES ('85', '联系客服qq号', 'service_qq', '', '0', '', '', '', '0', '0', '0', '1');
-INSERT INTO `ysk_config` VALUES ('84', '联系客服微信', 'service_wx', '', '0', '', '', '', '0', '0', '0', '1');
+INSERT INTO `ysk_config` VALUES ('84', '联系客服微信', 'service_wx', 'caifu2019ren', '0', '', '', '', '0', '0', '0', '1');
 INSERT INTO `ysk_config` VALUES ('26', '微信二维码', 'WEB_SITE_WX', '', '1', '', '', '', '0', '0', '0', '1');
 INSERT INTO `ysk_config` VALUES ('32', '注册开关', 'close_reg', '1', '3', '', '0:关闭1:开启', '关闭注册功能说明', '0', '0', '12', '1');
 INSERT INTO `ysk_config` VALUES ('33', '交易开关', 'close_trading', '1', '3', '', '0:关闭1:开启', '交易暂时关闭，16:00后开启', '0', '0', '13', '0');
@@ -904,6 +914,27 @@ CREATE TABLE `ysk_fenxiaojiang` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `ysk_fruitdetail`
+-- ----------------------------
+DROP TABLE IF EXISTS `ysk_fruitdetail`;
+CREATE TABLE `ysk_fruitdetail` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL COMMENT '用户ID',
+  `trading_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '交易类型 0-数量在自己账户内变动 1-收入  2-支出',
+  `num` decimal(10,2) NOT NULL COMMENT '交易数量',
+  `to_id` int(11) DEFAULT NULL COMMENT '支出给对方ID',
+  `trading_name` varchar(255) DEFAULT NULL,
+  `content` text COMMENT '说明',
+  `add_time` int(11) NOT NULL COMMENT '交易时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of ysk_fruitdetail
+-- ----------------------------
+INSERT INTO `ysk_fruitdetail` VALUES ('62', '1718', '1', '2.00', '0', '平台播发', '平台播发金钱2', '1523534817');
+
+-- ----------------------------
 -- Table structure for `ysk_fruit_in`
 -- ----------------------------
 DROP TABLE IF EXISTS `ysk_fruit_in`;
@@ -925,27 +956,6 @@ CREATE TABLE `ysk_fruit_in` (
 -- ----------------------------
 -- Records of ysk_fruit_in
 -- ----------------------------
-
--- ----------------------------
--- Table structure for `ysk_fruitdetail`
--- ----------------------------
-DROP TABLE IF EXISTS `ysk_fruitdetail`;
-CREATE TABLE `ysk_fruitdetail` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uid` int(11) NOT NULL COMMENT '用户ID',
-  `trading_type` tinyint(1) NOT NULL DEFAULT '0' COMMENT '交易类型 0-数量在自己账户内变动 1-收入  2-支出',
-  `num` decimal(10,2) NOT NULL COMMENT '交易数量',
-  `to_id` int(11) DEFAULT NULL COMMENT '支出给对方ID',
-  `trading_name` varchar(255) DEFAULT NULL,
-  `content` text COMMENT '说明',
-  `add_time` int(11) NOT NULL COMMENT '交易时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=63 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
--- Records of ysk_fruitdetail
--- ----------------------------
-INSERT INTO `ysk_fruitdetail` VALUES ('62', '1718', '1', '2.00', '0', '平台播发', '平台播发金钱2', '1523534817');
 
 -- ----------------------------
 -- Table structure for `ysk_gerenshangpu`
@@ -1109,6 +1119,21 @@ CREATE TABLE `ysk_harvdets` (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for `ysk_jianlou`
+-- ----------------------------
+DROP TABLE IF EXISTS `ysk_jianlou`;
+CREATE TABLE `ysk_jianlou` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `shouid` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of ysk_jianlou
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `ysk_jiaoyiorder`
 -- ----------------------------
 DROP TABLE IF EXISTS `ysk_jiaoyiorder`;
@@ -1185,26 +1210,14 @@ CREATE TABLE `ysk_lengque` (
   `level` int(11) NOT NULL COMMENT '达标等级',
   `status` int(11) NOT NULL COMMENT '达标处理状态0-未处理1-已处理',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ysk_lengque
 -- ----------------------------
-INSERT INTO `ysk_lengque` VALUES ('12', '779766', '1588921943', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('13', '779767', '1588924102', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('14', '779773', '1588925504', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('15', '779768', '1588928536', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('16', '779769', '1588928655', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('17', '779770', '1588928798', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('18', '779771', '1588928920', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('19', '779772', '1588929072', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('20', '779774', '1588929269', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('21', '779775', '1588929374', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('22', '779776', '1588929478', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('23', '779777', '1588929584', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('24', '779778', '1588929669', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('25', '779779', '1588929779', '1', '0');
-INSERT INTO `ysk_lengque` VALUES ('26', '779780', '1588929936', '1', '0');
+INSERT INTO `ysk_lengque` VALUES ('18', '779751', '1590026687', '1', '1');
+INSERT INTO `ysk_lengque` VALUES ('16', '779749', '158936124', '1', '1');
+INSERT INTO `ysk_lengque` VALUES ('17', '779749', '1589878590', '2', '1');
 
 -- ----------------------------
 -- Table structure for `ysk_level_list`
@@ -1252,11 +1265,35 @@ CREATE TABLE `ysk_loudan` (
   `uid` int(11) DEFAULT NULL,
   `shouid` int(11) DEFAULT NULL COMMENT '漏单id',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=716 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=730 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ysk_loudan
 -- ----------------------------
+INSERT INTO `ysk_loudan` VALUES ('706', '779752', '779750');
+INSERT INTO `ysk_loudan` VALUES ('707', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('708', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('709', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('710', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('711', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('712', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('713', '779749', '778904');
+INSERT INTO `ysk_loudan` VALUES ('714', '779750', '779749');
+INSERT INTO `ysk_loudan` VALUES ('715', '779750', '779749');
+INSERT INTO `ysk_loudan` VALUES ('716', '779753', '779749');
+INSERT INTO `ysk_loudan` VALUES ('717', '779753', '779749');
+INSERT INTO `ysk_loudan` VALUES ('718', '779765', '779764');
+INSERT INTO `ysk_loudan` VALUES ('719', '779765', '779764');
+INSERT INTO `ysk_loudan` VALUES ('720', '779765', '779764');
+INSERT INTO `ysk_loudan` VALUES ('721', '779765', '779764');
+INSERT INTO `ysk_loudan` VALUES ('722', '779765', '779764');
+INSERT INTO `ysk_loudan` VALUES ('723', '779750', '779749');
+INSERT INTO `ysk_loudan` VALUES ('724', '779751', '779750');
+INSERT INTO `ysk_loudan` VALUES ('725', '779752', '779751');
+INSERT INTO `ysk_loudan` VALUES ('726', '779752', '779750');
+INSERT INTO `ysk_loudan` VALUES ('727', '779752', '779751');
+INSERT INTO `ysk_loudan` VALUES ('728', '779752', '779751');
+INSERT INTO `ysk_loudan` VALUES ('729', '779753', '779752');
 
 -- ----------------------------
 -- Table structure for `ysk_love_shop`
@@ -1454,7 +1491,7 @@ INSERT INTO `ysk_menu` VALUES ('373', '完成列表', '12', '1', 'Finance', 'lis
 INSERT INTO `ysk_menu` VALUES ('375', '拆单', '12', '10', 'Finance', 'chaidan', null, '2', null, '74', '0');
 INSERT INTO `ysk_menu` VALUES ('376', '匹配', '12', '10', 'Finance', 'pipei', null, '2', null, '75', '0');
 INSERT INTO `ysk_menu` VALUES ('378', '交易中订单', '12', '1', 'Finance', 'list2', null, '2', 'fa-list', '73', '1');
-INSERT INTO `ysk_menu` VALUES ('380', '平台订单审核', '7', '1', 'User', 'order', null, '2', 'fa-list', '99', '0');
+INSERT INTO `ysk_menu` VALUES ('380', '平台订单审核', '7', '1', 'User', 'order', null, '2', 'fa-list', '99', '1');
 
 -- ----------------------------
 -- Table structure for `ysk_moneyils`
@@ -1494,15 +1531,16 @@ CREATE TABLE `ysk_news` (
   `type` int(2) DEFAULT '0' COMMENT '1公告;2关于我们；3常见问题；4首页说明；0未选择',
   `tuijian` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=114 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统公告';
+) ENGINE=MyISAM AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统公告';
 
 -- ----------------------------
 -- Records of ysk_news
 -- ----------------------------
-INSERT INTO `ysk_news` VALUES ('106', '这是二条最新公告', '', '0', '', '1588926356', '0', '&amp;nbsp;公告内容\r\n合作共赢，火爆上线中', '', '0', '0', '1', '0');
-INSERT INTO `ysk_news` VALUES ('105', '常见问题', '', '0', '', '1588944064', '0', '1、合作共赢系统是什么？&lt;br /&gt;\r\n合作共赢系统是一个为广大人民提供“互助互济+合作共赢”的众筹创业工具。&lt;br /&gt;\r\n《合作共赢系统》并不是严格意义上的慈善。系统原理是大家互相帮助，今天你帮助我明天我帮助你，我今天申请合作共赢帮助了你，将来我也会接受他人的帮助，也有一份回报。这不仅可以帮助别人轻松赚到钱，也可以快速成就自己。&lt;br /&gt;\r\n&lt;p&gt;\r\n	通过“合作+共赢+互助”实现互相帮助互相成就的结果，告别负债缺钱的痛苦！\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	2、什么情况下会产生漏单&lt;br /&gt;\r\n你的账号被冻结期间，因为冻结无法收款，所以就会产生漏单红包。&lt;br /&gt;\r\n当你的账号在冻结期间，你下面有人升级付款时，系统自动匹配审核人（直接跳到你的上级正常账号）解封后自动恢复正常匹配\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	3、合作共赢违法吗？&lt;br /&gt;\r\n在这份文件里可以看到，现在法律105条明确表明，群众可以搞互助互济活动，用通俗的话来说，就叫合作共赢。合作共赢并不是严格意义上的慈善，大家互相帮助，今天帮助你明天帮助我，我帮助你有一个预期，就是将来我也会接受帮助，也有一个回报。法无禁止皆可为，可以去做。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	4、合作共赢是传销吗？&lt;br /&gt;\r\n《合作共赢系统》没有资金池、没有泡沫。而传销是有资金池的，并由资金池去分配给团队领导人的市场佣金，而传销资金盘为了诱惑投资者和市场推广者，给出诱人又超级高的推荐奖，最后导致泡沫太大，崩盘跑路。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	5、申请合作共赢的基本条件？&lt;br /&gt;\r\n1、有能力支付188元参与合作共赢的人群&lt;br /&gt;\r\n2、想利用这个工具赚钱的人群&lt;br /&gt;\r\n3、不是为了面子单而升一级的&lt;br /&gt;\r\n4、对合作共赢系统的功能和属性已经完全了解\r\n&lt;/p&gt;', '', '0', '0', '3', '0');
-INSERT INTO `ysk_news` VALUES ('107', '操作说明', '', '0', '', '1588996531', '0', '合作共赢系统 升级说明&lt;br /&gt;\r\n&lt;br /&gt;\r\n合作共赢188系统震憾问世！&lt;br /&gt;\r\n月回报3-10万捐赠金真的可以如此简单&lt;br /&gt;\r\n升到最高级别Ｖ4原来可以更快，更简单！&amp;nbsp;&lt;br /&gt;\r\n&lt;br /&gt;\r\n参与合作共赢188捐赠互助爱心活动&amp;nbsp;&lt;br /&gt;\r\n全程捐赠188元，&amp;nbsp;&lt;br /&gt;\r\n帮助2个好友一起参与，&amp;nbsp;&lt;br /&gt;\r\n可获得团队4层人脉30人，共向你捐赠6.5万元&lt;br /&gt;\r\n&lt;br /&gt;\r\n合作共赢188系统共设了4个级别，&amp;nbsp;&lt;br /&gt;\r\n它的捐赠回报原理是怎样的？&lt;br /&gt;\r\n如何快速升级到V4呢？&lt;br /&gt;\r\n&lt;br /&gt;\r\n升级v1&amp;nbsp;&lt;br /&gt;\r\n你只要拿出188元&lt;br /&gt;\r\n捐赠1个人（你的推荐人）&lt;br /&gt;\r\n你便有了分享二维码可以分享给两个朋友&lt;br /&gt;\r\n&lt;br /&gt;\r\n升级Ｖ2&lt;br /&gt;\r\n当你收到376元后，&lt;br /&gt;\r\n拿出318元捐赠上二层老师&lt;br /&gt;\r\n拿出58捐赠平台系统维护费&lt;br /&gt;\r\n你便可以收到你二层四位会员捐赠给你的318元&lt;br /&gt;\r\n&lt;br /&gt;\r\n升级Ｖ3&amp;nbsp;&lt;br /&gt;\r\n当你收到1600元后&lt;br /&gt;\r\n拿出888元捐赠上三层老师&lt;br /&gt;\r\n你会收到你三层8位会员升三级捐赠给你的888元&lt;br /&gt;\r\n&lt;br /&gt;\r\n升级Ｖ4&amp;nbsp;&lt;br /&gt;\r\n当你收到6000元后&lt;br /&gt;\r\n拿出3888元捐赠上四层老师，捐赠平台管理费200元&lt;br /&gt;\r\n你会收到你四层16位会员捐赠给你的3888元&lt;br /&gt;\r\n&lt;br /&gt;\r\n任何参与者出局后，会自动滑落到伞下会员名下，需要再次注册新账户&lt;br /&gt;\r\n设定在第4层新会员伞下&lt;br /&gt;\r\n&lt;br /&gt;\r\n能保障新鲜血液循环注入&lt;br /&gt;\r\n又能让每个成员二次互助&lt;br /&gt;\r\n在流通中产生最大价值&lt;br /&gt;\r\n系统永远不会出现最后一个人&lt;br /&gt;', '', '0', '0', '4', '0');
-INSERT INTO `ysk_news` VALUES ('113', '这是一条最新公告', '', '0', '', '1588926224', '0', '合作共赢，火爆上线中', '', '0', '0', '1', '0');
+INSERT INTO `ysk_news` VALUES ('106', '这是二条最新公告', '', '0', '', '1568662500', '0', '&nbsp;公告内容\r\n财富人脉，火爆上线中', '', '0', '0', '0', '0');
+INSERT INTO `ysk_news` VALUES ('105', '常见问题', '', '0', '', '1568839665', '0', '&lt;p&gt;\r\n	1、注册了怎么不能使用推广二维码？\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	这个刚注册的0级是使用不了推广二维码的，\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	必须提升至1级即可使用推广二维码。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n2、提交升级订单，万一上级失联不确认订单怎么办？\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	这个如上级不确认订单，平台会24小时自动确认订单的！\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n3、漏单了怎么办？\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	亲，漏单了是补不回来的哦，\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	因为你的那个漏单是满足条件的上级捡到的。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&amp;nbsp;所以给你的建远就是尽快升级，防止再漏单 。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	4、可以修改支付宝或微信的收款码吗？\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	随时都可以修改的，可以平台上自行修改。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;', '', '0', '0', '3', '0');
+INSERT INTO `ysk_news` VALUES ('107', '操作说明', '', '0', '', '1572935001', '0', '&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	上传图片样板图供参考！\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	备注“编号多少，升几级”方便上级确认\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	微信支付宝皆可\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;img src=&quot;/Public/plugin/attached/image/20191002/20191002132955_63989.png&quot; alt=&quot;&quot; /&gt; \r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	1&lt;span&gt;、操作说明&lt;/span&gt; \r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	刚注册即是0级，使用推广码最低是1级\r\n&lt;/p&gt;\r\n点击“我要升级”会出来一个你上级收款码的订单，\r\n       直接扫码付款 备注“我的编号‘790001’升1级，帮我升级，谢谢”\r\n&lt;p&gt;\r\n	同时需要截图上传凭证，以方便上级确认核实订单。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	同样，你推荐的好友升级都会发你红包\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;span&gt;2、关于上级漏单&lt;/span&gt; \r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n如下级等级比自己高，那么下级升级，满足条件的上级捡单\r\n&lt;p&gt;\r\n	打个比方：\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	你上级2级，你1级，你下级从1级升2级，那么你不满足条件漏一单\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	你上级达标，捡你一单\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	3&lt;span&gt;确认订单和漏单&lt;/span&gt; \r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n如下级升级提交了订单，上级不及时核实确认订单，平台则会\r\n24小时自动确认订单\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	关于漏单，每漏一次订单平台都会发你一次短信提醒，通知你\r\n尽快升级，防止再次漏单\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;br /&gt;\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	注意事项：\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	请尽快提升至16级，升级到1级只能看到1层，2级只能看到2层\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	如等级低比如5级，就只能看到前5层。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	这样很容易下面看不到的层数里出现漏单。\r\n&lt;/p&gt;\r\n&lt;p&gt;\r\n	&lt;img src=&quot;/Public/plugin/attached/image/20191105/20191105142306_59479.png&quot; alt=&quot;&quot; /&gt;\r\n&lt;/p&gt;', '', '0', '0', '4', '0');
+INSERT INTO `ysk_news` VALUES ('113', '这是一条最新公告', '', '0', '', '1568663874', '0', '财富人脉，火爆上线中', '', '0', '0', '0', '0');
+INSERT INTO `ysk_news` VALUES ('114', '啊啊啊', '', '0', '', '1590027280', '0', '&amp;nbsp; &amp;nbsp; &amp;nbsp;水电费水电费', '', '0', '0', '1', '0');
 
 -- ----------------------------
 -- Table structure for `ysk_notice`
@@ -1749,11 +1787,17 @@ CREATE TABLE `ysk_preventip` (
   `ip` varchar(20) NOT NULL,
   `time` varchar(30) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5960 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of ysk_preventip
 -- ----------------------------
+INSERT INTO `ysk_preventip` VALUES ('5954', '43.250.201.116', '1558850860');
+INSERT INTO `ysk_preventip` VALUES ('5955', '123.147.246.112', '1558924481');
+INSERT INTO `ysk_preventip` VALUES ('5956', '36.157.163.118', '1559905647');
+INSERT INTO `ysk_preventip` VALUES ('5957', '223.104.14.124', '1560051619');
+INSERT INTO `ysk_preventip` VALUES ('5958', '27.190.75.89', '1560525738');
+INSERT INTO `ysk_preventip` VALUES ('5959', '112.17.245.12', '1560756796');
 
 -- ----------------------------
 -- Table structure for `ysk_product_cate`
@@ -2123,7 +2167,7 @@ CREATE TABLE `ysk_store` (
 -- ----------------------------
 -- Records of ysk_store
 -- ----------------------------
-INSERT INTO `ysk_store` VALUES ('779797', '0.00000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000');
+INSERT INTO `ysk_store` VALUES ('779766', '0.00000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000', '0.0000');
 
 -- ----------------------------
 -- Table structure for `ysk_tcp_config`
@@ -2276,13 +2320,30 @@ CREATE TABLE `ysk_tranmoney` (
   `my` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1,sv订单；2.sc',
   `status` int(11) NOT NULL COMMENT '1:加；2减',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=81692 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
+) ENGINE=MyISAM AUTO_INCREMENT=81709 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED;
 
 -- ----------------------------
 -- Records of ysk_tranmoney
 -- ----------------------------
-INSERT INTO `ysk_tranmoney` VALUES ('81690', '0', '779771', '1650.00', '1588927212', '11', null, null, '1', '1', '0');
-INSERT INTO `ysk_tranmoney` VALUES ('81691', '0', '779771', '1650.00', '1588927219', '11', null, null, '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81690', '0', '778904', '100.00', '1589349037', '0', '200.00', '200.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81691', '0', '778904', '100.00', '1589349049', '0', '300.00', '300.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81692', '0', '778904', '-100.00', '1589349089', '0', '200.00', '200.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81693', '0', '778904', '-100.00', '1589349098', '0', '100.00', '100.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81694', '0', '778904', '100.00', '1589350148', '0', '200.00', '200.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81695', '0', '778904', '-100.00', '1589350171', '0', '100.00', '100.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81696', '0', '778904', '100.00', '1589350440', '0', '200.00', '200.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81697', '0', '778904', '-200.00', '1589350553', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81698', '0', '778904', '-752.00', '1589350742', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81699', '0', '778904', '564.00', '1589352360', '0', '1128.00', '1128.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81700', '0', '778904', '-1128.00', '1589352365', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81701', '0', '779751', '9999.00', '1589766546', '0', '9999.00', '9999.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81702', '0', '779752', '9999.00', '1589767618', '0', '9999.00', '9999.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81703', '0', '779753', '9999.00', '1589878448', '0', '9999.00', '9999.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81704', '0', '779750', '-888.00', '1590114350', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81705', '0', '779749', '-188.00', '1590114517', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81706', '0', '779750', '-188.00', '1590114645', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81707', '0', '779750', '-188.00', '1590114706', '0', '0.00', '0.00', '1', '1', '0');
+INSERT INTO `ysk_tranmoney` VALUES ('81708', '0', '779750', '-188.00', '1590114849', '0', '0.00', '0.00', '1', '1', '0');
 
 -- ----------------------------
 -- Table structure for `ysk_trans`
@@ -2494,68 +2555,7 @@ CREATE TABLE `ysk_upgrade` (
 -- ----------------------------
 -- Records of ysk_upgrade
 -- ----------------------------
-INSERT INTO `ysk_upgrade` VALUES ('RC253588', '779775', '1', '779770', '2', '1588928735', '/Uploads/2020-05-08/5eb520df84724.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('SX309756', '779774', '1', '779769', '2', '1588928646', '/Uploads/2020-05-08/5eb520868bc54.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('IE414126', '779767', '1', '779766', '2', '1588928015', '/Uploads/2020-05-08/5eb51e0f8bc54.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('DP983740', '779770', '1', '779767', '2', '1588928100', '/Uploads/2020-05-08/5eb51e649cdc4.png', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('JE572796', '779768', '1', '779766', '2', '1588928161', '/Uploads/2020-05-08/5eb51ea182014.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('IS466586', '779769', '2', '779766', '2', '1588932009', '/Uploads/2020-05-08/5eb52da947694.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('CB498089', '779769', '2', '778904', '2', '1588932016', '/Uploads/2020-05-08/5eb52db06c084.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('SS580899', '779771', '1', '779768', '2', '1588928450', '/Uploads/2020-05-08/5eb51fc2ab824.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('SY157046', '779772', '1', '779768', '2', '1588928515', '/Uploads/2020-05-08/5eb52003efde4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('SJ163967', '779773', '1', '779769', '2', '1588928599', '/Uploads/2020-05-08/5eb52057735b4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('ON169570', '779776', '1', '779770', '2', '1588928787', '/Uploads/2020-05-08/5eb52113735b4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('TD856710', '779777', '1', '779771', '2', '1588928866', '/Uploads/2020-05-08/5eb5216244f84.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('TA344198', '779778', '1', '779771', '2', '1588928910', '/Uploads/2020-05-08/5eb5218e3da54.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('PX943420', '779779', '1', '779772', '2', '1588928991', '/Uploads/2020-05-08/5eb521dfa9114.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('WN487432', '779780', '1', '779772', '2', '1588929066', '/Uploads/2020-05-08/5eb5222adc564.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('CJ926281', '779781', '1', '779773', '2', '1588929122', '/Uploads/2020-05-08/5eb52262b0644.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('XK424838', '779782', '1', '779773', '2', '1588929150', '/Uploads/2020-05-08/5eb5227e7f904.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('SD686779', '779783', '1', '779774', '2', '1588929220', '/Uploads/2020-05-08/5eb522c4adf34.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('FS457714', '779784', '1', '779774', '2', '1588929261', '/Uploads/2020-05-08/5eb522ed6e794.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('NG763024', '779785', '1', '779775', '2', '1588929324', '/Uploads/2020-05-08/5eb5232c19064.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('YW783047', '779786', '1', '779775', '2', '1588929366', '/Uploads/2020-05-08/5eb52356adf34.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('HD880935', '779787', '1', '779776', '2', '1588929424', '/Uploads/2020-05-08/5eb5239070ea4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('RK401629', '779788', '1', '779776', '2', '1588929469', '/Uploads/2020-05-08/5eb523bda1be4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('TI854458', '779789', '1', '779777', '2', '1588929525', '/Uploads/2020-05-08/5eb523f5b7b74.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('UD998324', '779790', '1', '779777', '2', '1588929580', '/Uploads/2020-05-08/5eb5242c4ebc4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('PJ698507', '779791', '1', '779778', '2', '1588929632', '/Uploads/2020-05-08/5eb524605af14.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('HF354745', '779792', '1', '779778', '2', '1588929665', '/Uploads/2020-05-08/5eb52481bf0a4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('VD882473', '779793', '1', '779779', '2', '1588929730', '/Uploads/2020-05-08/5eb524c216954.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('HX486856', '779794', '1', '779779', '2', '1588929769', '/Uploads/2020-05-08/5eb524e984724.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('DO171273', '779795', '1', '779780', '2', '1588929843', '/Uploads/2020-05-08/5eb525330a604.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('FL496661', '779796', '1', '779780', '2', '1588929926', '/Uploads/2020-05-08/5eb52586c65d4.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('GX251913', '779767', '3', '779764', '2', '1588932724', '/Uploads/2020-05-08/5eb530745d624.jpg', '888', '1');
-INSERT INTO `ysk_upgrade` VALUES ('MA770742', '779774', '2', '779767', '2', '1588930064', '/Uploads/2020-05-08/5eb526103b344.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('EY594165', '779774', '2', '778904', '2', '1588930070', '/Uploads/2020-05-08/5eb52616d5034.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('SV555795', '779775', '2', '779767', '2', '1588930129', '/Uploads/2020-05-08/5eb5265189544.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('EF894915', '779775', '2', '778904', '2', '1588930135', '/Uploads/2020-05-08/5eb526575af14.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('LL180337', '779776', '2', '779767', '2', '1588930174', '/Uploads/2020-05-08/5eb5267e42874.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('NR605810', '779776', '2', '778904', '2', '1588930181', '/Uploads/2020-05-08/5eb5268507ef4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('CL499215', '779777', '2', '779768', '2', '1588930250', '/Uploads/2020-05-08/5eb526ca93184.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('ZE891510', '779777', '2', '778904', '2', '1588930261', '/Uploads/2020-05-08/5eb526d5d0214.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('ZS516574', '779778', '2', '779768', '2', '1588930291', '/Uploads/2020-05-08/5eb526f34ebc4.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('FO658380', '779778', '2', '778904', '2', '1588930297', '/Uploads/2020-05-08/5eb526f92c8e4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('PB363644', '779779', '2', '779768', '2', '1588930332', '/Uploads/2020-05-08/5eb5271ca42f4.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('ST878106', '779779', '2', '778904', '2', '1588930342', '/Uploads/2020-05-08/5eb52726c17b4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('FM536404', '779780', '2', '779768', '2', '1588930374', '/Uploads/2020-05-08/5eb5274697fa4.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('PO141418', '779780', '2', '778904', '2', '1588930380', '/Uploads/2020-05-08/5eb5274cab824.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('MB623663', '779767', '2', '778904', '2', '1588932684', '/Uploads/2020-05-08/5eb5304c27ac4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('PZ960641', '779769', '1', '779767', '2', '1588931972', '/Uploads/2020-05-08/5eb52d84dc564.jpg', '188', '1');
-INSERT INTO `ysk_upgrade` VALUES ('AO578536', '779767', '2', '779765', '2', '1588932677', '/Uploads/2020-05-08/5eb53045d5034.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('QD556427', '779770', '2', '779766', '2', '1588930526', '/Uploads/2020-05-08/5eb527de1de84.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('GY812380', '779770', '2', '778904', '2', '1588930534', '/Uploads/2020-05-08/5eb527e64c4b4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('HA625888', '779771', '2', '779766', '2', '1588930598', '/Uploads/2020-05-08/5eb5282640164.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('UT306707', '779771', '2', '778904', '2', '1588930607', '/Uploads/2020-05-08/5eb5282fcb3f4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('PW365896', '779772', '2', '779766', '2', '1588930640', '/Uploads/2020-05-08/5eb5285020594.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('YQ779504', '779772', '2', '778904', '2', '1588930647', '/Uploads/2020-05-08/5eb5285736524.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('AT593176', '779766', '2', '779764', '2', '1588931049', '/Uploads/2020-05-08/5eb529e9d9e54.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('BA432748', '779766', '2', '778904', '2', '1588931062', '/Uploads/2020-05-08/5eb529f627ac4.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('HU260125', '779766', '3', '778904', '2', '1588931135', '/Uploads/2020-05-08/5eb52a3f4ebc4.jpg', '888', '1');
-INSERT INTO `ysk_upgrade` VALUES ('MM285256', '779773', '2', '779767', '2', '1588932557', '/Uploads/2020-05-08/5eb52fcd6c084.jpg', '318', '1');
-INSERT INTO `ysk_upgrade` VALUES ('BW358728', '779773', '2', '778904', '2', '1588932563', '/Uploads/2020-05-08/5eb52fd344f84.jpg', '58', '2');
-INSERT INTO `ysk_upgrade` VALUES ('MR885797', '779767', '4', '778904', '2', '1588932768', '/Uploads/2020-05-08/5eb530a020594.jpg', '3888', '1');
-INSERT INTO `ysk_upgrade` VALUES ('XG877337', '779797', '1', '779796', '0', '0', null, '188', '1');
+INSERT INTO `ysk_upgrade` VALUES ('JQ404321', '779751', '1', '779750', '2', '159011486', '/Uploads/2020-05-22/5ec73a31bfb04.png', '188', '1');
 
 -- ----------------------------
 -- Table structure for `ysk_upload`
@@ -2644,50 +2644,29 @@ CREATE TABLE `ysk_user` (
   `is_cooling` varchar(255) DEFAULT NULL COMMENT '未升级冷却0-未冷却1-冷却',
   `earning` int(255) DEFAULT '0' COMMENT '累计收入',
   `count` int(11) DEFAULT '0' COMMENT '直系3888数量',
+  `jianlou` int(11) DEFAULT '0' COMMENT '捡漏次数',
+  `friends` int(11) DEFAULT '0' COMMENT '好友数量',
   PRIMARY KEY (`userid`) USING BTREE,
   UNIQUE KEY `mobile` (`mobile`) USING BTREE,
   UNIQUE KEY `account` (`account`) USING BTREE,
   KEY `username` (`username`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=779798 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=MyISAM AUTO_INCREMENT=779967 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of ysk_user
 -- ----------------------------
-INSERT INTO `ysk_user` VALUES ('778904', '0', '0', '0', '13211111111', '13211111111', '测试1', '', '84d51347732babc3a27562bebd1378ad', '84a', '84d51347732babc3a27562bebd1378ad', '84a', '0', '1558358861', '112.17.247.75', '1', '0', 'c1dhrpf3jglsq8flaa4ett5uh0', '', '22', '-8570-8599-8641-8658-8732-8733-778892-', '5', 'toux-icon.png', 'test', '义乌1', '6', '6217001460009198283', '0.0000', '1560736410', '0', '0.0000', '0', '', '1', '0', '', '430281199306035928', '15669510603', 'L 031363', '12nR2K9HqgfF5rhvrWKjUV8VCGzo2txJbp', '1', '/Uploads/Payvos/5ce6431d1503d.jpg', '/Uploads/Payvos/5ce4e20d3365e.png', '1', '1', '0', '0', '16', '0', '微信', '/Uploads/Payvos/5eb4fc5440164', '7986', '0', '10166', '0');
-INSERT INTO `ysk_user` VALUES ('779764', '778904', '0', '0', '13221111111', '13221111111', '11', '', '13710ece13626547ddac19254fa821cd', '268', '13710ece13626547ddac19254fa821cd', '268', '0', '1588916356', '234893107', '1', '1', 'iukfn8fbb219k14ua741cvek41', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '1111223', '345555', null, '0', null, null, '1', '0', '0', '0', '4', '0', '微信', '/Uploads/Payvos/5eb50d0a49da4', '1524', null, '1524', '0');
-INSERT INTO `ysk_user` VALUES ('779765', '779764', '778904', '0', '13231111111', '13231111111', '22', '', '6c25c9c22ccfc93bf483aa4aa37891af', 'e77', '6c25c9c22ccfc93bf483aa4aa37891af', 'e77', '0', '1588916463', '234893107', '1', '1', 'u1qd0mrmj294g6udctnmbgdcp0', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '12er0', '23rk', null, '0', null, null, '1', '0', '0', '0', '4', '0', '微信', '/Uploads/Payvos/5eb508b3253b4', '636', null, '636', '0');
-INSERT INTO `ysk_user` VALUES ('779766', '779765', '779764', '0', '13241111111', '13241111111', '33', '', '9f0809098ec4b5e3eeaa469e9a6330a1', '2b6', '9f0809098ec4b5e3eeaa469e9a6330a1', '2b6', '0', '1588916521', '234893107', '1', '1', 'u1qd0mrmj294g6udctnmbgdcp0', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '1334', '99220', null, '0', null, null, '1', '0', '0', '0', '3', '0', '微信', '/Uploads/Payvos/5eb5089638c34', '2342', '0', '2342', '0');
-INSERT INTO `ysk_user` VALUES ('779767', '779766', '779765', '0', '13211111112', '13211111112', '1层1', '', '6204435378dc0fc49a847ffe4ba7d391', '8c3', '6204435378dc0fc49a847ffe4ba7d391', '8c3', '0', '1588916617', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '111', 'dkem33', null, '0', null, null, '1', '0', '0', '0', '4', '0', '支付宝', '/Uploads/Payvos/5eb50dea84724', '6188', '0', '6188', '0');
-INSERT INTO `ysk_user` VALUES ('779768', '779766', '779765', '0', '13211111113', '13211111113', '一层2', '', 'f16e0daa061f009e269821856d18174f', '475', 'f16e0daa061f009e269821856d18174f', '475', '0', '1588916732', '234893107', '1', '1', 'u1qd0mrmj294g6udctnmbgdcp0', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '1111', 'kkk', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb500ffb0644', '1648', '0', '1648', '0');
-INSERT INTO `ysk_user` VALUES ('779769', '779767', '779766', '0', '13211111114', '13211111114', '2层1', '', '91212caf28a56055720e92df0a0e5e58', '8f6', '91212caf28a56055720e92df0a0e5e58', '8f6', '0', '1588916820', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '1244', '2eek', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb50dbb95894', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779770', '779767', '779766', '0', '13211111115', '13211111115', '2层2', '', '541af38ddc261b785b70bd6adc750406', '1a0', '541af38ddc261b785b70bd6adc750406', '1a0', '0', '1588916893', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '12er', '2ddkk', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb50e942c8e4', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779771', '779768', '779766', '0', '13211111116', '13211111116', '2层3', '', 'dced191c74128272b04bce98e1d3c77d', '186', 'dced191c74128272b04bce98e1d3c77d', '186', '0', '1588916949', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', null, null, 'sdd', 'effm', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb51fb75fd34', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779772', '779768', '779766', '0', '13211111117', '13211111117', '2层4', '', '5d9df74ae3d426958e03d43126e8ed93', '8c2', '5d9df74ae3d426958e03d43126e8ed93', '8c2', '0', '1588917002', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', null, null, 'ekdkm', 'nnnkkk', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb51ffb7aae4', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779773', '779769', '779767', '0', '13211111118', '13211111118', '三层1', '', '3bdc209c73cb0d96a82c1158f171ec51', '634', '3bdc209c73cb0d96a82c1158f171ec51', '634', '0', '1588917057', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '164649', '19499', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb5141d6c084', '752', '0', '752', '0');
-INSERT INTO `ysk_user` VALUES ('779774', '779769', '779767', '0', '13211111119', '13211111119', '3层2', '', 'b030037a55217cd4b6f20f3d7239cf09', 'af2', 'b030037a55217cd4b6f20f3d7239cf09', 'af2', '0', '1588917103', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'wskdk', 'skfmm', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb5207d14244', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779775', '779770', '779767', '0', '13211111120', '13211111120', '三层3', '', 'a34196e50b1c7ce4603aea86e78b457a', '105', 'a34196e50b1c7ce4603aea86e78b457a', '105', '0', '1588917160', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'qsdk', 'wmdmf', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb520d147694', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779776', '779770', '779767', '0', '13211111121', '13211111121', '3层4', '', '3a7c676a10808ee92b846daf029c330c', '4a7', '3a7c676a10808ee92b846daf029c330c', '4a7', '0', '1588917216', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'wmdm', 'mmdmf', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb521085fd34', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779777', '779771', '779768', '0', '13211111122', '13211111122', '3层5', '', '80afbd88cfe140e78326b4a818b558b1', 'd38', '80afbd88cfe140e78326b4a818b558b1', 'd38', '0', '1588917277', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'wsk', 'dmdm', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb52156ab824', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779778', '779771', '779768', '0', '13211111123', '13211111123', '3层6', '', '5aa0293e08e0ad171feb6cb255d6ae4e', '983', '5aa0293e08e0ad171feb6cb255d6ae4e', '983', '0', '1588917325', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ekddk', 'kdm', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb52184ba284', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779779', '779772', '779768', '0', '13211111124', '13211111124', '3层7', '', 'e90a4cc2bc2f1e1472edfda908e69643', 'f02', 'e90a4cc2bc2f1e1472edfda908e69643', 'f02', '0', '1588917385', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'wksk', 'skdkd', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb521d59cdc4', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779780', '779772', '779768', '0', '13211111125', '13211111125', '3层8', '', '24c102744820c4f4a30b5b6cc889d6df', '1ff', '24c102744820c4f4a30b5b6cc889d6df', '1ff', '0', '1588917426', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'skdk', 'dmxmxm', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb52215ba284', '376', '0', '376', '0');
-INSERT INTO `ysk_user` VALUES ('779781', '779773', '779769', '0', '13211111126', '13211111126', '4层1', '', '1ba78580da9443712a1bfedb73d63089', '2c8', '1ba78580da9443712a1bfedb73d63089', '2c8', '0', '1588917527', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '133', '233r', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb511a2a42f4', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779782', '779773', '779769', '0', '13211111127', '13211111127', '4层2', '', '3539a98f425ba9b8d73e506c44b315ef', '2eb', '3539a98f425ba9b8d73e506c44b315ef', '2eb', '0', '1588917564', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '124999', '12234', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb5147ed5034', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779783', '779774', '779769', '0', '13211111128', '13211111128', '4层3', '', '7d6fd84ee00ffa31543f81821b349952', 'b61', '7d6fd84ee00ffa31543f81821b349952', 'b61', '0', '1588917614', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ekek', 'dmdm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb522ba42874', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779784', '779774', '779769', '0', '13211111129', '13211111129', '4层4', '', '76824b5a2318241907e28116e2c95855', 'c5c', '76824b5a2318241907e28116e2c95855', 'c5c', '0', '1588917663', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'eek', 'dm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb522e48bc54', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779785', '779775', '779770', '0', '13211111130', '13211111130', '4层5', '', '7f9a77334844599da9d764d9a22e8be6', '19e', '7f9a77334844599da9d764d9a22e8be6', '19e', '0', '1588917731', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'eksk', 'dmdmd', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb52320539e4', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779786', '779775', '779770', '0', '13211111131', '13211111131', '4层6', '', '98befad19830e5e52603ac41b0d72df5', '4bd', '98befad19830e5e52603ac41b0d72df5', '4bd', '0', '1588917765', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'wksk', 'dmdm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb5234d5d624', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779787', '779776', '779770', '0', '13211111132', '13211111132', '4层7', '', 'b4e53bb0ebf4b22c0258a08ff0d3ef93', '120', 'b4e53bb0ebf4b22c0258a08ff0d3ef93', '120', '0', '1588917806', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ekek', 'dkdk', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb523872c8e4', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779788', '779776', '779770', '0', '13211111133', '13211111133', '4层8', '', '98949893ab75ff1feff03172c406e1cd', 'a27', '98949893ab75ff1feff03172c406e1cd', 'a27', '0', '1588917843', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ekek', 'dmfm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb523b447694', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779789', '779777', '779771', '0', '13211111134', '13211111134', '4层9', '', '7aa09105a95580edf1e65ec1c4770d1f', '1a5', '7aa09105a95580edf1e65ec1c4770d1f', '1a5', '0', '1588917887', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ekek', 'dmdm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb523e98bc54', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779790', '779777', '779771', '0', '13211111135', '13211111135', '4层10', '', '13f8d167ff2ed792d48c3a63e92d06b4', '20f', '13f8d167ff2ed792d48c3a63e92d06b4', '20f', '0', '1588917938', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'skdk', 'dkdk', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb52413253b4', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779791', '779778', '779771', '0', '13211111136', '13211111136', '4层11', '', '5ba41f7ff6e495f0b5256cf6677bda63', '8bf', '5ba41f7ff6e495f0b5256cf6677bda63', '8bf', '0', '1588917999', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ekrk', 'dkdk', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb5245742874', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779792', '779778', '779771', '0', '13211111137', '13211111137', '4层12', '', '58ce58bcf940c54fb6385d8be4825f5f', '0b4', '58ce58bcf940c54fb6385d8be4825f5f', '0b4', '0', '1588918037', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'kk', 'ekdk', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb52477d0214', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779793', '779779', '779772', '0', '13211111138', '13211111138', '4层13', '', '3d87318f424465da0402cc49272afec6', 'e46', '3d87318f424465da0402cc49272afec6', 'e46', '0', '1588918095', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'dkdk', 'smdm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb524b8c8ce4', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779794', '779779', '779772', '0', '13211111139', '13211111139', '4层14', '', '46daf296663ac537eccb1829770e3c8a', 'e17', '46daf296663ac537eccb1829770e3c8a', 'e17', '0', '1588918128', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'ssm', 'smsm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb524dfed6d4', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779795', '779780', '779772', '0', '13211111140', '13211111140', '4层15', '', 'd53e99332f409880dca6541f62769f23', 'd19', 'd53e99332f409880dca6541f62769f23', 'd19', '0', '1588918190', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'skdk', 'sksk', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb5252793184', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779796', '779780', '779772', '0', '13211111141', '13211111141', '4层16', '', '76def9337d4e10cc7c607ad9eeec0100', '1ad', '76def9337d4e10cc7c607ad9eeec0100', '1ad', '0', '1588918225', '234893107', '1', '1', '6ck15lrstq9vbshs72nbk7ri30', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, 'dkdk', 'dmfm', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eb5257c86e34', '0', '0', '0', '0');
-INSERT INTO `ysk_user` VALUES ('779797', '779796', '779780', '779772', '13255555555', '13255555555', '111111', '', 'bcc0011f3541bac4aa0b53ceec0f747b', '900', '547e17e60c787ecf130abe178926aaed', '900', '0', '1588999480', '121.32.176.162', '1', '0', null, null, '2', '-779796-', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', null, null, '5555', '5555', null, '0', null, null, '0', '0', '0', '0', '0', '0', '微信', '/Uploads/Payvos/5eb635570bd74', '0', null, '0', '0');
+INSERT INTO `ysk_user` VALUES ('778904', '0', '0', '0', '13211111111', '13211111111', '测试1', '', '84d51347732babc3a27562bebd1378ad', '84a', '84d51347732babc3a27562bebd1378ad', '84a', '0', '1558358861', '112.17.247.75', '1', '0', '24oq2bo8ol5ldv45gkb1ejtbm4', '', '22', '-8570-8599-8641-8658-8732-8733-778892-', '5', 'toux-icon.png', 'test', '义乌1', '6', '6217001460009198283', '0.0000', '1560736410', '0', '0.0000', '0', '', '1', '0', '', '430281199306035928', '15669510603', 'L 031363', '12nR2K9HqgfF5rhvrWKjUV8VCGzo2txJbp', '1', '/Uploads/Payvos/5ce6431d1503d.jpg', '/Uploads/Payvos/5ce4e20d3365e.png', '1', '1', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb6226ee0d42', '2068', '0', '116', '0', '0', '11');
+INSERT INTO `ysk_user` VALUES ('779749', '778904', '0', '0', '13222222222', '13222222222', 'paower', '', 'c9d3eb778b4c53f6608d90b15bb162c2', 'e38', 'c9d3eb778b4c53f6608d90b15bb162c2', 'e38', '0', '1588579605', '2130706433', '1', '1', '6cb03mqlham1132did4hjobd61', null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '123', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eafcd42efbb9', '234220', '0', '0', '1', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779750', '779749', '778904', '0', '13333333333', '13333333333', '333', '', 'a8fe9003e5f65a1625f966a0c2eb696b', '9fd', 'a8fe9003e5f65a1625f966a0c2eb696b', '9fd', '0', '1588581146', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '123', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eafd3476404f', '2639', '0', '188', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779752', '779751', '779750', '0', '13555555555', '13555555555', '123', '', 'd09c6baf0e8c387d879fb22222dfc527', '104', 'd09c6baf0e8c387d879fb22222dfc527', '104', '0', '1588641980', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '123', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb0c0fa62b48', '6376', null, '376', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779751', '779750', '779749', '0', '13444444444', '13444444444', '444', '', 'd612eb89ac6182a723fbaf8d458f833b', 'b08', 'd612eb89ac6182a723fbaf8d458f833b', 'b08', '0', '1588584174', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '123', null, '0', null, null, '1', '0', '0', '0', '1', '0', '微信', '/Uploads/Payvos/5eafdf0f9c865', '2236', '0', '636', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779753', '779752', '779751', '0', '13666666666', '13666666666', '3', '', '87dc869fcf8e2869ec4e1fa8ad599d4f', '828', '87dc869fcf8e2869ec4e1fa8ad599d4f', '828', '0', '1588648299', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '132', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb10e995b8d8', '6000', '0', '9999', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779754', '779749', '778904', '0', '13777777777', '13777777777', '321', '', 'c3f5aa910e4a80534708b48265a6f73e', 'f5a', 'c3f5aa910e4a80534708b48265a6f73e', 'f5a', '0', '1588671488', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, null, null, null, '0', null, null, '1', '0', '0', '0', '3', '0', null, null, '0', '0', '0', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779755', '779754', '779749', '0', '13888888888', '13888888888', '321', '', '84560342a4419ffe87c77ddeb62f9477', '24b', '84560342a4419ffe87c77ddeb62f9477', '24b', '0', '1588672204', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', null, null, null, null, null, '0', null, null, '0', '0', '0', '0', '0', '0', null, null, '0', null, '0', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779765', '779764', '779763', '0', '13122222222', '13122222222', 'test', '', '289db279bac14f1fbf729b9bf5f721ae', '50c', '289db279bac14f1fbf729b9bf5f721ae', '50c', '0', '1589161798', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', null, null, '123', '132', null, '0', null, null, '0', '0', '0', '0', '0', '0', '微信', '/Uploads/Payvos/5eb8af7ab4e88', '0', null, '0', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779763', '779755', '779754', '0', '13999999999', '139999999999', '321', '', 'c1006b19b1fe11c1c4205b08117c68b0', '1cc', 'c1006b19b1fe11c1c4205b08117c68b0', '1cc', '0', '1588902712', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '123', null, '0', null, null, '1', '0', '0', '0', '2', '0', '微信', '/Uploads/Payvos/5eb4d6b061836', '0', null, '0', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779764', '779763', '779755', '0', '18344324057', '18344324057', 'paower', '', 'f9ea3a5f93c936cb7a9a2ef4474b71c7', '940', 'f9ea3a5f93c936cb7a9a2ef4474b71c7', '940', '0', '1589161688', '2130706433', '1', '1', null, null, '1', '', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', '', null, '123', '123', null, '0', null, null, '1', '0', '0', '0', '4', '0', '微信', '/Uploads/Payvos/5eb8af0cc42ac', '0', '0', '0', '0', '0', '0');
+INSERT INTO `ysk_user` VALUES ('779766', '779765', '779764', '779763', '18344324058', '18344324058', 'paower', '', '30c2ba593fe83911e00b8f7f1a3733ba', 'b16', '56e10a06212bd902df1cae1d86271668', 'b16', '0', '1589435608', '127.0.0.1', '1', '0', null, null, '2', '-779765-', '5', 'toux-icon.png', '', '', '0', '', '0.0000', '1', '0', '0.0000', '0', null, '0', '0', null, null, null, null, null, '0', null, null, '0', '0', '0', '0', '0', '0', null, null, '0', null, '0', '0', '0', '0');
 
 -- ----------------------------
 -- Table structure for `ysk_user_action`
@@ -2706,6 +2685,7 @@ CREATE TABLE `ysk_user_action` (
 -- ----------------------------
 -- Records of ysk_user_action
 -- ----------------------------
+INSERT INTO `ysk_user_action` VALUES ('234', '后台系统用户', '1', 'admin', '2018-11-27 23:25:34', '登录了后台系统');
 
 -- ----------------------------
 -- Table structure for `ysk_user_caimi`
