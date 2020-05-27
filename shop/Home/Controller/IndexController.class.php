@@ -4,6 +4,20 @@ use Think\Controller;
 
 class IndexController extends CommonController
 {
+    //修改用户微信
+    public function changewx(){
+        $id = session('userid');
+        $wx = M('user')->where("userid = $id")->getField('wx');
+        $this->assign('wx',$wx);
+        if(IS_POST){
+            $wx = I('wx');
+            $res = M('user')->where("userid = $id")->setField('wx',$wx);
+            if($res == 1){
+                ajaxReturn('修改成功',1);
+            }
+        }
+        $this->display();
+    }
     public function superior(){
         $id = session('userid');
         $pid = M('user')->where("userid = $id")->getField('pid');

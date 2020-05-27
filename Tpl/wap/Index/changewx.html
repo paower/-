@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <script src="../../../../jubaozuang/jubao/Themes/Home/nc/Public/js/JdClick.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -33,7 +33,7 @@
 	<div class="header_l">
 		<a href="javascript:history.back(-1)"><img src="__WIMG__/jiant.png" alt=""></a>
 	</div>
-	<div class="header_c"><h2>{$Think.lang.skzh}</h2></div>
+	<div class="header_c"><h2>修改微信</h2></div>
 	<div class="header_r"></div>
 </div>
 
@@ -41,40 +41,13 @@
 	
 	<div class="add_bank_add_gr">
         <form id='myupload'  method='post' enctype='multipart/form-data'>
-		<div class="fill_sty add_gr_b10">
-			<p>{$Think.lang.sklx}：</p>
-			<select name="sktype" style="margin-top: 10px;">
-              <option value ="微信" <if condition="$wxinfo[sktype] eq 微信"> selected </if> >{$Think.lang.wx}</option>
-              <option value ="支付宝" <if condition="$wxinfo[sktype] eq 支付宝"> selected </if>>{$Think.lang.zfb}</option>
-            </select>
-		</div>
-        <div class="fill_sty add_gr_b10">
-            <p>{$Think.lang.skzh}：</p>
-            <input type="text" name="zfb" placeholder="{$Think.lang.qsrskzh}" autocomplete="off" id="crkxm" value="{$wxinfo[zfb]}">
-        </div>
         <div class="fill_sty add_gr_b10">
             <p style="width: 100px;">{$Think.lang.wxlxfs}：</p>
-            <input type="text" name="wx" placeholder="{$Think.lang.qsrwxh}" autocomplete="off" id="crkxm" value="{$wxinfo[wx]}">
-        </div>
-		<div class= "add_gr_b10">
-            <div class="weixinma" style="margin-bottom: 10px;">{$Think.lang.scskm}</div>
-			<div class="orderlist" style="height: 237px;">
-				<a class="wxmacenter" style="border:none;display: block;margin: 0 auto;
-    float: none;" href="javascript:void(0);"><if condition="$wxinfo[skimg] eq null"><img src="/Public/home/wap/images/addup.png" alt="" onClick="uploadimg()" style="padding-top: 10px"><else/><img src="{$wxinfo[skimg]}" alt="" onClick="uploadimg()" style="padding-top: 10px"></if></a>
-				<div class="shangcjt" style="display: none">
-						<div class="containera"></div>
-						<input type="text" value="{$trid}" name="trid">
-						<input type="file" id="photo" name="uploadfile" class="shangcanj" accept="image/*">
-				</div>
-			</div>
-			<div class="weixinma" style="margin: 10px 0 10px 0;">{$Think.lang.wxorzfb}</div>
+            <input type="text" name="wx" placeholder="{$Think.lang.qsrwxh}" autocomplete="off" id="crkxm" value="{$wx}">
         </div>
 		</form>
 		
 	</div>
-	<label class="label_check" for="checkbox-01">
-		<input name="sample-checkbox-01" id="checkbox-01" value="1" type="checkbox" checked="">{$Think.lang.mrskzh}
-	</label>
 	<div class="buttonGeoup">
 		<a href="#" class="not_next" id="confirm">{$Think.lang.termine}</a>
 	</div>
@@ -225,7 +198,7 @@
         <!-- } -->
         var fm = document.getElementsByTagName('form')[0];
         var fl = new FormData(fm);
-        var url = "{:U('Growth/weixinbinding')}";
+        var url = "{:U('index/changewx')}";
         $.ajax({
           url:url,
           type:"POST",
@@ -243,7 +216,7 @@
          },
             error: function (xhr) { //上传失败
                 console.log(xhr);
-                alert("上传失败");
+                alert("修改失败");
             }
         })
 		

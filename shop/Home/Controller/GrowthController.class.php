@@ -217,54 +217,103 @@ public function ok()
 	//确认付款 上传截图
 	public function yes()
 	{
-	if (M("User")->autoCheckToken($_POST)){
-		if(IS_POST){
-			$upload = new \Think\Upload();// 实例化上传类
-		    $upload->maxSize   =     3145728 ;// 设置附件上传大小
-		    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
-		    $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
-		    $upload->savePath  =     ''; // 设置附件上传（子）目录
-		    // 上传文件 
-		    $info   =   $upload->upload();
-		    if($info){
-		    	$src = "/Uploads/".$info['file']['savepath'].$info['file']['savename'];
-		    	// dump($src);die;
-	            // return $getSaveName=str_replace("\\","/",$info->saveName());
-	        }else{
-	            $this->error('上传失败');
-	        }
-	        $id = I('id');
-	        $data['src'] = $src;
-	        $data['state'] = 1;
-	        $data['paytime'] = time();
-	        $a['id'] = $id;
-	        $shouid = M('upgrade')->where($a)->getField('shouid');
-	        $phone = M('user')->where("userid=$shouid")->getField('mobile');
-	        // $msg = "你有新的订单待审核，请登录操作确认。";
-	        $this->NewSms2($phone);
-	        $c = M('upgrade')->where($a)->save($data);
-	        if($c){
-	        	$this->success('上传成功');
-	        }else{
-	        	$this->error('上传失败');
-	        }
-		}else{
-			$id = I('get.id');
-			$a['id'] = I('get.id');
-			$money = D('upgrade')->where($a)->getField('money');
-			$this->assign('money',$money);
+		if (M("User")->autoCheckToken($_POST)){
+			if(IS_POST){
+				$upload = new \Think\Upload();// 实例化上传类
+			    $upload->maxSize   =     3145728 ;// 设置附件上传大小
+			    $upload->exts      =     array('jpg', 'gif', 'png', 'jpeg');// 设置附件上传类型
+			    $upload->rootPath  =     './Uploads/'; // 设置附件上传根目录
+			    $upload->savePath  =     ''; // 设置附件上传（子）目录
+			    // 上传文件 
+			    $info   =   $upload->upload();
+			    if($info){
+			    	$src = "/Uploads/".$info['file']['savepath'].$info['file']['savename'];
+			    	// dump($src);die;
+		            // return $getSaveName=str_replace("\\","/",$info->saveName());
+		        }else{
+		            $this->error('上传失败');
+		        }
+		        $id = I('id');
+		        $data['src'] = $src;
+		        $data['state'] = 1;
+		        $data['paytime'] = time();
+		        $a['id'] = $id;
+		        $shouid = M('upgrade')->where($a)->getField('shouid');
+		        $phone = M('user')->where("userid=$shouid")->getField('mobile');
+		        // $msg = "你有新的订单待审核，请登录操作确认。";
+		        $this->NewSms2($phone);
+		        $c = M('upgrade')->where($a)->save($data);
+		        if($c){
+		        	$this->success('上传成功');
+		        }else{
+		        	$this->error('上传失败');
+		        }
+			}else{
+				$id = I('get.id');
+				$a['id'] = I('get.id');
+				$money = D('upgrade')->where($a)->getField('money');
+				$this->assign('money',$money);
 
-			$shouid = D('upgrade')->where($a)->getField('shouid');
-			$user = M('user')->where("userid=$shouid")->find();
-			$this->assign('user',$user);
+				$shouid = D('upgrade')->where($a)->getField('shouid');
+				$user = M('user')->where("userid=$shouid")->find();
+				$this->assign('user',$user);
 
-			$now = time();
-			$this->assign('time',$now);
-			$this->assign('id',$id);
-			// dump($user);die;
-			$this->display('Paidimg');
+				$now = time();
+				$this->assign('time',$now);
+				$this->assign('id',$id);
+				// dump($user);die;
+				$this->display('Paidimg');
+			}
 		}
 	}
+	//判断账号是否 如果不正常则跳级 继续往上查 查到正常的账号为止
+	public function is_account_normal($id){
+		$status = M('user')->where("userid = $id")->getField('status');
+		$cooling = M('user')->where("userid = $id")->getField('is_cooling');
+		//判断账号状态
+		if($status!=1 || $cooling == 1){
+			//判断是否冻结
+			if($status!=1){
+				$dong[] = $id;
+			}
+			//判断是否冷却
+			if($cooling == 1){
+				$leng[] = $id;
+			}
+			//查上级
+			for ($i=0; $i < 1; $i++) { 
+				# code...
+				$pid = M('user')->where("userid = $id")->getField('pid');
+				if($pid != 0){
+					$status = M('user')->where("userid = $pid")->getField('status');
+					$cooling = M('user')->where("userid = $pid")->getField('is_cooling');
+					$jianlou = M('user')->where("userid = $pid")->getField('jianlou');
+					//是否冻结 冷却 已捡漏
+					if($status!=1 || $cooling == 1 || $jianlou == 1){
+						//判断是否冻结
+						if($status!=1){
+							$dong[] = $pid;
+						}
+						//判断是否冷却
+						if($cooling == 1){
+							$leng[] = $pid;
+						}
+						$i = -1;
+						$id = $pid;
+					}
+				}else{
+					$pid = $id;
+				}
+			}
+			M('user')->where("userid = $pid")->setField('jianlou',1);
+			$res['pid'] = $pid;
+			$res['dong'] = $dong;
+			$res['leng'] = $leng;
+			return $res;
+		}else{
+			$res['pid'] = $id;
+			return $res;
+		}
 	}
 	//升级 查询订单
 	public function upgrade()
@@ -399,42 +448,10 @@ public function ok()
 					$pid = $id;
 					break;
 				}
-				$status = M('user')->where("userid = $pid")->getField('status');
-				$cooling = M('user')->where("userid = $pid")->getField('is_cooling');
-				//判断账号状态
-				if($status!=1 || $cooling == 1){
-					//判断是否冻结
-					if($status!=1){
-						$dong[] = $pid;
-					}
-					//判断是否冷却
-					if($cooling == 1){
-						$leng[] = $pid;
-					}
-					$id = $pid;
-					$i--;
-				}
-				//判断是否捡漏
-				if($zzpid != $pid && $i==1){
-					//判断捡漏次数
-					$jianlou = M('user')->where("userid = $pid")->getField('jianlou');
-					//判断是否存在订单
-					$where['uid'] = session('userid');
-					$where['up'] = $uplevel;
-					$b = M('upgrade')->where($where)->count();
-					if($jianlou == 0 && $b == 0){
-						//判断是否平台账号
-						if($pid != 778904){
-							M('user')->where("userid = $pid")->setInc('jianlou',1);
-						}
-					}else{
-						$id = $pid;
-						$i--;
-					}
-					
-				}
 				$id = $pid;
 			}
+			//判断收款账号是否需要跳级
+			$res = $this->is_account_normal($pid);
 			//判断是否存在订单
 			$where['uid'] = session('userid');
 			$where['up'] = $uplevel;
@@ -443,7 +460,7 @@ public function ok()
 				//上层订单
 				$order1['uid']=session('userid');
 				$order1['up'] = $uplevel;
-				$order1['shouid'] = $pid; 
+				$order1['shouid'] = $res['pid']; 
 				$order1['money'] = 318;
 				$order1['id']=chr(rand(65,90)).chr(rand(65,90)).rand(100000,999999);
 				$order1['type'] = 1;
@@ -489,7 +506,7 @@ public function ok()
 					M('upgrade')->add($order2);
 				}
 				//冻结账号漏单短信提醒和增加漏单次数
-				foreach ($dong as $k => $v) {
+				foreach ($res['dong'] as $k => $v) {
 					$data['uid'] = session('userid');
 					$data['shouid'] = $v;
 					M('loudan')->add($data);
@@ -499,7 +516,7 @@ public function ok()
 					$this->NewSms($phone,$msg);
 				}
 				//冷却账号漏单短信提醒和增加漏单次数
-				foreach ($leng as $k => $v) {
+				foreach ($res['leng'] as $k => $v) {
 					$data['uid'] = session('userid');
 					$data['shouid'] = $v;
 					M('loudan')->add($data);
@@ -530,42 +547,10 @@ public function ok()
 					$pid = $id;
 					break;
 				}
-				$status = M('user')->where("userid = $pid")->getField('status');
-				$cooling = M('user')->where("userid = $pid")->getField('is_cooling');
-				//判断账号状态
-				if($status!=1 || $cooling == 1){
-					//判断是否冻结
-					if($status!=1){
-						$dong[] = $pid;
-					}
-					//判断是否冷却
-					if($cooling == 1){
-						$leng[] = $pid;
-					}
-					$id = $pid;
-					$i--;
-				}
-				//判断是否捡漏
-				if($zzpid != $pid && i==2){
-					//判断捡漏次数
-					$jianlou = M('user')->where("userid = $pid")->getField('jianlou');
-					//判断是否存在订单
-					$where['uid'] = session('userid');
-					$where['up'] = $uplevel;
-					$b = M('upgrade')->where($where)->count();
-					if($jianlou == 0 && $b == 0){
-						//判断是否平台账号
-						if($pid != 778904){
-							M('user')->where("userid = $pid")->setInc('jianlou',1);
-						}
-					}else{
-						$id = $pid;
-						$i--;
-					}
-				}
 				$id = $pid;
 			}
-			// dump($pid);die;
+			//判断收款账号是否需要跳级
+			$res = $this->is_account_normal($pid);
 			//判断是否存在订单
 			$where['uid'] = session('userid');
 			$where['up'] = $uplevel;
@@ -574,7 +559,7 @@ public function ok()
 				//上层订单
 				$order1['uid']=session('userid');
 				$order1['up'] = $uplevel;
-				$order1['shouid'] = $pid; 
+				$order1['shouid'] = $res['pid']; 
 				$order1['money'] = 888;
 				$order1['id']=chr(rand(65,90)).chr(rand(65,90)).rand(100000,999999);
 				$order1['type'] = 1;
@@ -596,7 +581,7 @@ public function ok()
 					M('upgrade')->add($order1);
 				}
 				//冻结账号漏单短信提醒和增加漏单次数
-				foreach ($dong as $k => $v) {
+				foreach ($res['dong'] as $k => $v) {
 					$data['uid'] = session('userid');
 					$data['shouid'] = $v;
 					M('loudan')->add($data);
@@ -606,7 +591,7 @@ public function ok()
 					$this->NewSms($phone,$msg);
 				}
 				//冷却账号漏单短信提醒和增加漏单次数
-				foreach ($leng as $k => $v) {
+				foreach ($res['leng'] as $k => $v) {
 					$data['uid'] = session('userid');
 					$data['shouid'] = $v;
 					M('loudan')->add($data);
@@ -638,42 +623,10 @@ public function ok()
 					$pid = $id;
 					break;
 				}
-				$status = M('user')->where("userid = $pid")->getField('status');
-				$cooling = M('user')->where("userid = $pid")->getField('is_cooling');
-				//判断账号状态
-				if($status!=1 || $cooling == 1){
-					//判断是否冻结
-					if($status!=1){
-						$dong[] = $pid;
-					}
-					//判断是否冷却
-					if($cooling == 1){
-						$leng[] = $pid;
-					}
-					$id = $pid;
-					$i--;
-				}
-				//判断是否捡漏
-				if($zzpid != $pid && i==3){
-					//判断捡漏次数
-					$jianlou = M('user')->where("userid = $pid")->getField('jianlou');
-					//判断是否存在订单
-					$where['uid'] = session('userid');
-					$where['up'] = $uplevel;
-					$b = M('upgrade')->where($where)->count();
-					if($jianlou == 0 && $b == 0){
-						//判断是否平台账号
-						if($pid != 778904){
-							M('user')->where("userid = $pid")->setInc('jianlou',1);
-						}
-					}else{
-						$id = $pid;
-						$i--;
-					}
-				}
 				$id = $pid;
 			}
-			// dump($pid);dump($leng);dump($dong);die;
+			//判断收款账号是否需要跳级
+			$res = $this->is_account_normal($pid);
 			//判断是否存在订单
 			$where['uid'] = session('userid');
 			$where['up'] = $uplevel;
@@ -704,7 +657,7 @@ public function ok()
 					M('upgrade')->add($order1);
 				}
 				//冻结账号漏单短信提醒和增加漏单次数
-				foreach ($dong as $k => $v) {
+				foreach ($res['dong'] as $k => $v) {
 					$data['uid'] = session('userid');
 					$data['shouid'] = $v;
 					M('loudan')->add($data);
@@ -714,7 +667,7 @@ public function ok()
 					$this->NewSms($phone,$msg);
 				}
 				//冷却账号漏单短信提醒和增加漏单次数
-				foreach ($leng as $k => $v) {
+				foreach ($res['leng'] as $k => $v) {
 					$data['uid'] = session('userid');
 					$data['shouid'] = $v;
 					M('loudan')->add($data);
@@ -1812,41 +1765,52 @@ public function ok()
 			$data['zfb'] = I('zfb');
 			$picname = $_FILES['uploadfile']['name'];
 			$picsize = $_FILES['uploadfile']['size'];
-			
 			if($data['zfb']==null){
 				ajaxReturn('请填写收款账号',0);
 			}
 			if($data['wx']==null){
-				ajaxReturn('请填写微信联系方式',0);
 			}
 			// if(empty($code)||$code!=$codes){
 				// ajaxReturn('验证码有误');
 			// }
-			if ($picname != "") {
-				if ($picsize > 10485760) { //限制上传大小
-					ajaxReturn('图片大小不能超过10M',0);
-				}
-			//	if(!strstr($picname,'.png') && !strstr($picname,'.jpg') && !strstr($picname,'.jpeg') && !strstr($picname,'.gif')){
-			//		ajaxReturn('图片格式不对',0);
-		//		}
+			// $have = M('user')->where("userid = $uid")->getField('skimg');
+			// if((empty($picname) || empty($picsize)) && empty($have)){
+			// 	ajaxReturn('请上传图片');
+			// }
+			if(!empty($picname) && !empty($picsize)){
+				if ($picname != "") {
+					if ($picsize > 10485760) { //限制上传大小
+						ajaxReturn('图片大小不能超过10M',0);
+					}
+				//	if(!strstr($picname,'.png') && !strstr($picname,'.jpg') && !strstr($picname,'.jpeg') && !strstr($picname,'.gif')){
+				//		ajaxReturn('图片格式不对',0);
+			//		}
 
-				$rand = rand(100, 999);
-				$pics = uniqid() . $type; //命名图片名称
-				//上传路径
-				$pic_path = "./Uploads/Payvos/". $pics;
-				move_uploaded_file($_FILES['uploadfile']['tmp_name'], $pic_path);
-			}
-			$size = round($picsize/1024,2); //转换成kb
-			$pic_path = trim($pic_path,'.');
-			if($size){
-				$data['skimg'] = $pic_path;
+					$rand = rand(100, 999);
+					$pics = uniqid() . $type; //命名图片名称
+					//上传路径
+					$pic_path = "./Uploads/Payvos/". $pics;
+					move_uploaded_file($_FILES['uploadfile']['tmp_name'], $pic_path);
+				}
+				$size = round($picsize/1024,2); //转换成kb
+				$pic_path = trim($pic_path,'.');
+				if($size){
+					$data['skimg'] = $pic_path;
+					$upwx = M('user')->where(array('userid'=>$uid))->save($data);
+					if($upwx){
+						ajaxReturn('提交成功',1,'/Growth/Conpay');
+					}else{
+						ajaxReturn('提交失败',0);
+					}
+				}		
+			}else{
 				$upwx = M('user')->where(array('userid'=>$uid))->save($data);
 				if($upwx){
 					ajaxReturn('提交成功',1,'/Growth/Conpay');
 				}else{
 					ajaxReturn('提交失败',0);
 				}
-			}		
+			}
 		}
 		$this->display();
 	}
